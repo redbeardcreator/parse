@@ -87,13 +87,13 @@ class Node
 	 */
 	public function isExpression($name)
 	{
-		$result = false;
 		$underNS = 'PhpParser\\Node\\Expr\\'.$name.'_';
 		$normalNS = 'PhpParser\\Node\\Expr\\'.$name;
 
 		if ($this->node instanceof $underNS || $this->node instanceof $normalNS) {
-			$result = true;
+			return true;
 		}
-		return $result;
+
+		return false;
 	}
 }
