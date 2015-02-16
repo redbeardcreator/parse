@@ -18,6 +18,7 @@ class ScanCommandTest extends \PHPUnit_Framework_TestCase
     private $filename;
     private $root;
 
+    const DOTS_REGEX = "/Parse.*\n\n\.+\n\nOK.*\n$/";
 
     public function setUp()
     {
@@ -29,7 +30,7 @@ class ScanCommandTest extends \PHPUnit_Framework_TestCase
     public function testDottedOutput()
     {
         $this->assertRegExp(
-            '/\./',
+            self::DOTS_REGEX,
             $this->executeCommand(['--format' => 'dots']),
             'Using --format=dots should generate output'
         );
@@ -41,6 +42,15 @@ class ScanCommandTest extends \PHPUnit_Framework_TestCase
             '/\[\=+\]/',
             $this->executeCommand(['--format' => 'progress'], ['decorated' => true]),
             'Using --format=progress should use the progressbar'
+        );
+    }
+
+    public function testDotsOutputIfNotDecorated()
+    {
+        $this->assertRegExp(
+            self::DOTS_REGEX,
+            $this->executeCommand(['--format' => 'progress'], ['decorated' => false]),
+            'Using --format=progress should use the dots if not decorated'
         );
     }
 
