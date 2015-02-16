@@ -8,6 +8,7 @@ class ImportRequestVariablesTest extends RuleTestCase
     {
         return [
             ['import_request_variables();', false],
+            ['something_else();', true],
         ];
     }
 
