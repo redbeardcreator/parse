@@ -20,17 +20,23 @@ trait IsBoolLiteralTrait
      */
     protected function isBoolLiteral(Node $node, $value = null)
     {
-        if ($node->name instanceof \PhpParser\Node\Name) {
-            $name = strtolower($node->name);
-            if ($name === 'true' || $name === 'false') {
-                if ($value === true) {
-                    return $name === 'true';
-                } elseif ($value === false) {
-                    return $name === 'false';
-                }
-                return true;
-            }
+        if (!$node->name instanceof \PhpParser\Node\Name) {
+            return false;
         }
-        return false;
+
+        $name = strtolower($node->name);
+        if ($name !== 'true' && $name !== 'false') {
+            return false;
+        }
+
+        if (!is_bool($value)) {
+            return true;
+        }
+
+        if ($value) {
+            return $name === 'true';
+        }
+
+        return $name === 'false';
     }
 }
