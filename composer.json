@@ -22,7 +22,8 @@
         "phpunit/phpunit": "4.2.*",
         "codeclimate/php-test-reporter": "dev-master",
         "mockery/mockery": "0.9.*",
-        "akamon/mockery-callable-mock": "~1.0"
+        "akamon/mockery-callable-mock": "~1.0",
+        "mikey179/vfsStream": "~1.4"
     },
     "autoload": {
         "psr-4": {

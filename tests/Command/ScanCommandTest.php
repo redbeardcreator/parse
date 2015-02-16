@@ -5,6 +5,7 @@ namespace Psecio\Parse\Command;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Console\Output\OutputInterface;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * @covers \Psecio\Parse\Command\ScanCommand
@@ -14,17 +15,15 @@ class ScanCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string Name of empty php file used in scanning
      */
-    private static $filename;
+    private $filename;
+    private $root;
 
-    public static function setUpBeforeClass()
-    {
-        self::$filename = sys_get_temp_dir() . '/' . uniqid('psecio-parse') . '.php';
-        touch(self::$filename);
-    }
 
-    public static function tearDownAfterClass()
+    public function setUp()
     {
-        unlink(self::$filename);
+        $this->root = vfsStream::setup('exampleDir');
+        $this->filename = vfsStream::url('exampleDir') . '/test.php';
+        touch($this->filename);
     }
 
     public function testDottedOutput()
@@ -103,7 +102,7 @@ class ScanCommandTest extends \PHPUnit_Framework_TestCase
         $application->add(new ScanCommand);
         $tester = new CommandTester($application->find('scan'));
         $input['command'] = 'scan';
-        $input['path'] = [self::$filename];
+        $input['path'] = [$this->filename];
         $tester->execute($input, $options);
 
         return $tester->getDisplay();

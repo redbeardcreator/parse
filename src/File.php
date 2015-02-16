@@ -30,10 +30,10 @@ class File
     public function __construct(SplFileInfo $splFileInfo)
     {
         if (!$splFileInfo->isReadable()) {
-            throw new RuntimeException("Failed to open file '{$splFileInfo->getRealPath()}'");
+            throw new RuntimeException("Failed to open file '{$splFileInfo->getPathname()}'");
         }
         $this->splFileInfo = $splFileInfo;
-        $this->lines = file($splFileInfo->getRealPath(), FILE_IGNORE_NEW_LINES);
+        $this->lines = file($splFileInfo->getPathname(), FILE_IGNORE_NEW_LINES);
     }
 
     /**
