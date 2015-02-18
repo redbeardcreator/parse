@@ -2,7 +2,7 @@
 
 namespace Psecio\Parse\Rule\Helper;
 
-use \PhpParser\Node;
+use PhpParser\Node;
 
 /**
  * Helper to evaluate if node is an expression
@@ -18,13 +18,9 @@ trait IsExpressionTrait
      */
     protected function isExpression(Node $node, $name)
     {
-        $result = false;
         $underNS = 'PhpParser\\Node\\Expr\\'.$name.'_';
         $normalNS = 'PhpParser\\Node\\Expr\\'.$name;
 
-        if ($node instanceof $underNS || $node instanceof $normalNS) {
-            $result = true;
-        }
-        return $result;
+        return ($node instanceof $underNS || $node instanceof $normalNS);
     }
 }
